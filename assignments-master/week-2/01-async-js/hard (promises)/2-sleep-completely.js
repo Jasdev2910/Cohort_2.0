@@ -5,6 +5,21 @@
  */
 
 function sleep(milliseconds) {
+  return new Promise((resolve) => {
+    const startingTime = Date.now();
+
+    function busyWait() {
+      const currentTime = Date.now();
+
+      if (currentTime - startingTime >= milliseconds) {
+        resolve();
+      } else {
+        setTimeout(busyWait, 0);
+      }
+    }
+
+    busyWait();
+  });
 }
 
 module.exports = sleep;
